@@ -1,19 +1,18 @@
 import logging
+import os
+from datetime import datetime
 
-def setup_logger(log_file='output.log'):
-    """Setup logging configuration"""
-    logging.basicConfig(filename=log_file,
-                        format='%(asctime)s - %(levelname)s - %(message)s',
-                        level=logging.INFO)
+LOG_FILE=f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+logs_path=os.path.join(os.getcwd(), "logs", LOG_FILE)
+os.makedirs(logs_path,exist_ok=True)           # appends existing file directory
 
-def main():
-    # Set up the logger
-    setup_logger()
+LOG_FILE_PATH=os.path.join(logs_path,LOG_FILE)
 
-    # Example usage
-    logging.info('This is an informational message')
-    logging.warning('This is a warning message')
-    logging.error('This is an error message')
+logging.basicConfig(
+    filename=LOG_FILE_PATH,
+    format="[ %(asctime)s] %(lineno)d %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO,
+)
 
-if __name__ == "__main__":
-    main()
+if __name__=="__main__":
+    logging.info("Logging has started")
